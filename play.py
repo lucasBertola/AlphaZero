@@ -36,7 +36,7 @@ class MCTSPlayer:
         print(f'IA: I think I have a {round(((values[0][0] + 1) / 2) * 100)}% chance of winning')
         return np.argmax(predicted_policies, axis=1)
 
-    def get_name(self):
+    def getName(self):
         return self.name
 
     def is_deterministic(self):
@@ -60,7 +60,7 @@ def main():
 
     if latest_model_path is not None:
         print(f'Loading model generation {generation}')
-        ai_instance = AlphaFour(latest_model_path)
+        ai_instance = AlphaFour(latest_model_path,iteration=2500)
     else:
         print('Error: No model found')
         exit()

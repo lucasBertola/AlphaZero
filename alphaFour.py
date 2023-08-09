@@ -22,17 +22,19 @@ def get_device():
 
 
 class AlphaFour:
-    def __init__(self, model_path=None):
+    def __init__(self, model_path=None,iteration=MCTS_ITERATIONS):
         """Initializes the AlphaFour class with a ResNet model and an optimizer.
 
         Args:
             model_path (str, optional): Path to the pre-trained model. Defaults to None.
         """
+        self.iteration = iteration
+
         self.model = ResNet(NUM_BLOCKS, NUM_CHANNELS)
         self.model.to(get_device())
 
         if model_path is not None and os.path.exists(model_path):
-            self.model.load_state_dict(torch.load(model_path))
+            self.model.load_state_dict(torch.load(model_path, map_location=get_device()))
         elif model_path is not None:
             exit('Model not found' + str(model_path))
 
@@ -197,7 +199,7 @@ class AlphaFour:
         self.model.eval()
         roots = [self.create_node_with_leaf_cache(env) for env in envs]
 
-        for i in range(MCTS_ITERATIONS):
+        for i in range(self.iteration):
             leafs = []
 
             for root in roots:
