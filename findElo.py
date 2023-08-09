@@ -144,24 +144,24 @@ class EloFinder:
         self.policy_player_deter = PolicyPlayer(ia, 'Policy deter', deterministic=True)
         self.policy_player = PolicyPlayer(ia, 'Policy', deterministic=False)
         self.value_player = ValuePlayer(ia, 'ValuePlayer', deterministic=False)
-        self.player_mcts = MCTSPlayer(ia, 'MCTS')
+        self.player_mcts = MCTSPlayer(ia, 'MCTS-AlphaZero')
         self.ia = ia
 
     def find_and_display_elo(self, generation):
         self.ia.model.eval()
         print(f'Finding elo for generation {generation}')
 
-        elo_value = EloLeaderboard().get_elo(self.value_player, VALUE_PLAYER_GAMES)
-        self.value_player.set_elo(elo_value)
-        print(f'Elo of {self.value_player.get_name()}: {round(elo_value)}')
+        # elo_value = EloLeaderboard().get_elo(self.value_player, VALUE_PLAYER_GAMES)
+        # self.value_player.set_elo(elo_value)
+        # print(f'Elo of {self.value_player.get_name()}: {round(elo_value)}')
 
-        elo_policy_deter = EloLeaderboard().get_elo(self.policy_player_deter, POLICY_DETER_GAMES, True)
-        self.policy_player_deter.set_elo(elo_policy_deter)
-        print(f'Elo of {self.policy_player_deter.get_name()}: {round(elo_policy_deter)}')
+        # elo_policy_deter = EloLeaderboard().get_elo(self.policy_player_deter, POLICY_DETER_GAMES, True)
+        # self.policy_player_deter.set_elo(elo_policy_deter)
+        # print(f'Elo of {self.policy_player_deter.get_name()}: {round(elo_policy_deter)}')
 
-        elo_policy = EloLeaderboard().get_elo(self.policy_player, POLICY_GAMES, True)
-        self.policy_player.set_elo(elo_policy)
-        print(f'Elo of {self.policy_player.get_name()}: {round(elo_policy)}')
+        # elo_policy = EloLeaderboard().get_elo(self.policy_player, POLICY_GAMES, True)
+        # self.policy_player.set_elo(elo_policy)
+        # print(f'Elo of {self.policy_player.get_name()}: {round(elo_policy)}')
 
         self.player_mcts.use_model = generation != 0
         elo_mcts = EloLeaderboard().get_elo(self.player_mcts, MCTS_GAMES, True)
